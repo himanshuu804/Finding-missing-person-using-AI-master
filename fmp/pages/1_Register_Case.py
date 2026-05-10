@@ -1,5 +1,6 @@
 import uuid
 import json
+import base64
 import streamlit as st
 from pages.helper import db_queries
 from pages.helper.data_models import MissingPerson
@@ -37,11 +38,11 @@ if submit:
     else:
         with st.spinner("Processing image and extracting face data..."):
             unique_id = str(uuid.uuid4())
-            image_path = f"./resources/{unique_id}.jpg"
 
+            # Image ko base64 mein convert karo — file system ki zaroorat nahi
             image_obj.seek(0)
-            with open(image_path, "wb") as f:
-                f.write(image_obj.read())
+            image_bytes = image_obj.read()
+            image_base64 = base64.b64encode(image_bytes).decode()
 
             image_numpy = image_obj_to_numpy(image_obj)
             face_mesh = extract_face_mesh_landmarks(image_numpy)
@@ -57,7 +58,7 @@ if submit:
                 contact_number=contact_number,
                 face_mesh=json.dumps(face_mesh),
                 registered_by=st.session_state.get("user", "Unknown"),
-                image_path=image_path,
+                image_path=image_base64,  # base64 string save ho rahi hai
                 status="NF",
             )
 
@@ -65,4 +66,4 @@ if submit:
 
         st.success(f"✅ Case registered successfully! ID: `{unique_id}`")
         if not face_mesh:
-            st.warning("⚠️ No face detected in the image. Matching may not work. Try a clearer frontal photo.")
+            st.warning("⚠️ No face detected. Try a clearer frontal photo.")
