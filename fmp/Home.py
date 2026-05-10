@@ -31,13 +31,13 @@ else:
     config = {
         "credentials": {
             "usernames": {
-                "gagan": {
-                    "email": st.secrets["credentials"]["usernames"]["gagan"]["email"],
-                    "name": st.secrets["credentials"]["usernames"]["gagan"]["name"],
-                    "city": st.secrets["credentials"]["usernames"]["gagan"]["city"],
-                    "area": st.secrets["credentials"]["usernames"]["gagan"]["area"],
-                    "role": st.secrets["credentials"]["usernames"]["gagan"]["role"],
-                    "password": st.secrets["credentials"]["usernames"]["gagan"]["password"],
+                "himanshu": {
+                    "email": st.secrets["credentials"]["usernames"]["himanshu"]["email"],
+                    "name": st.secrets["credentials"]["usernames"]["himanshu"]["name"],
+                    "city": st.secrets["credentials"]["usernames"]["himanshu"]["city"],
+                    "area": st.secrets["credentials"]["usernames"]["himanshu"]["area"],
+                    "role": st.secrets["credentials"]["usernames"]["himanshu"]["role"],
+                    "password": st.secrets["credentials"]["usernames"]["himanshu"]["password"],
                 }
             }
         },
