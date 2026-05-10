@@ -5,9 +5,12 @@ import io
 
 
 def image_obj_to_numpy(image_obj):
-    """Convert a Streamlit uploaded file to a numpy array."""
-    image_obj.seek(0)
-    img = Image.open(image_obj).convert("RGB")
+    """Convert a Streamlit uploaded file or bytes to a numpy array."""
+    if isinstance(image_obj, bytes):
+        img = Image.open(io.BytesIO(image_obj)).convert("RGB")
+    else:
+        image_obj.seek(0)
+        img = Image.open(image_obj).convert("RGB")
     return np.array(img)
 
 
@@ -20,14 +23,17 @@ def extract_face_mesh_landmarks(image_numpy):
         import mediapipe as mp
         mp_face_mesh = mp.solutions.face_mesh
 
+        # RGB ensure karo
+        if image_numpy.dtype != np.uint8:
+            image_numpy = (image_numpy * 255).astype(np.uint8)
+
         with mp_face_mesh.FaceMesh(
             static_image_mode=True,
             max_num_faces=1,
             refine_landmarks=True,
-            min_detection_confidence=0.5,
+            min_detection_confidence=0.3,
         ) as face_mesh:
             results = face_mesh.process(image_numpy)
-
             if results.multi_face_landmarks:
                 landmarks = results.multi_face_landmarks[0].landmark
                 return [(lm.x, lm.y, lm.z) for lm in landmarks]
