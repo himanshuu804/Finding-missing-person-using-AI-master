@@ -1,6 +1,6 @@
+import base64
 import streamlit as st
 import pandas as pd
-import os
 from pages.helper import db_queries
 from pages.helper.streamlit_helpers import require_login
 
@@ -29,8 +29,12 @@ else:
             col1, col2 = st.columns([1, 2])
 
             with col1:
-                if case.image_path and os.path.exists(case.image_path):
-                    st.image(case.image_path, width=180)
+                if case.image_path:
+                    try:
+                        image_bytes = base64.b64decode(case.image_path)
+                        st.image(image_bytes, width=180)
+                    except:
+                        st.write("📷 No image")
                 else:
                     st.write("📷 No image")
 
