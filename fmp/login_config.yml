@@ -1,0 +1,18 @@
+# https://blog.streamlit.io/streamlit-authenticator-part-1-adding-an-authentication-component-to-your-app/
+
+credentials:
+  usernames:
+    himanshu:
+      email: himanshudhiman203@gmail.com
+      name: Himanshu Dhiman
+      city: Chandigarh
+      area: Sector 44
+      role: Admin
+      password: '$2b$12$OndXiLMhWzgQpgt38BnMg.tGfjkvEXFkE6jrtHbtOeGRs4bF9DT.i' # abc
+cookie:
+  expiry_days: 1
+  key: random_signature_key
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - himanshudhiman203@gmail.com
