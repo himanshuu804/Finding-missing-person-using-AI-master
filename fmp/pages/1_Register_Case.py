@@ -39,14 +39,12 @@ if submit:
         with st.spinner("Processing image and extracting face data..."):
             unique_id = str(uuid.uuid4())
 
-            # Image ko base64 mein convert karo — file system ki zaroorat nahi
-          image_obj.seek(0)
-image_bytes = image_obj.read()
-image_base64 = base64.b64encode(image_bytes).decode()
+            image_obj.seek(0)
+            image_bytes = image_obj.read()
+            image_base64 = base64.b64encode(image_bytes).decode()
 
-# bytes seedha pass karo numpy ke liye
-image_numpy = image_obj_to_numpy(image_bytes)
-face_mesh = extract_face_mesh_landmarks(image_numpy)
+            image_numpy = image_obj_to_numpy(image_bytes)
+            face_mesh = extract_face_mesh_landmarks(image_numpy)
 
             person = MissingPerson(
                 id=unique_id,
@@ -59,7 +57,7 @@ face_mesh = extract_face_mesh_landmarks(image_numpy)
                 contact_number=contact_number,
                 face_mesh=json.dumps(face_mesh),
                 registered_by=st.session_state.get("user", "Unknown"),
-                image_path=image_base64,  # base64 string save ho rahi hai
+                image_path=image_base64,
                 status="NF",
             )
 
